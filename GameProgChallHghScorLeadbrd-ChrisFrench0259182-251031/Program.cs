@@ -84,12 +84,15 @@ namespace GameProgChallHghScorLeadbrd_ChrisFrench0259182_251031
         }
 
         //m4
-
+        static void txt()
+        {
+            File.Create(file.highScore).Close();
+        }
 
 
         //m5
 
 
-    
+
     }
 }
