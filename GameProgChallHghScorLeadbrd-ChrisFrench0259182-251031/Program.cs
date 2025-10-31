@@ -12,11 +12,11 @@ namespace GameProgChallHghScorLeadbrd_ChrisFrench0259182_251031
     {
         static int newScore;
         static Random random = new Random();
-        static string plrInitls = ($"{initial1}.{initial2}.{initial3}.");
+        static string plrInitls;// = input; //($"{initial1}.{initial2}.{initial3}.");
        // static string scoreData = ($"{hScore}, {plrInitls}");
-        static string initial1;
-        static string initial2;
-        static string initial3;
+        //static string initial1;
+        //static string initial2;
+        //static string initial3;
         //static char initial1;
         //static char initial2;
         //static char initial3;
@@ -40,15 +40,20 @@ namespace GameProgChallHghScorLeadbrd_ChrisFrench0259182_251031
             { 
 
                 genScore();
-                Thread.Sleep(2000);
+                Thread.Sleep(1000);
                 Initials();
                 Thread.Sleep(2000);
                 WriteScoreInitals();
                 Thread.Sleep(500);
-           
-                Console.ReadKey(true);
+                //Console.ForegroundColor = ConsoleColor.DarkYellow;
+                //Console.WriteLine("press any Key to save scores");
+                //Console.ReadKey(true);
+                Thread.Sleep(1500);
                 wtFile();
-                Console.ReadKey(true);
+                //Console.ForegroundColor = ConsoleColor.DarkYellow;
+                //Console.WriteLine("press any Key to write scores to screen");
+                //Console.ReadKey(true);
+                Thread.Sleep(1500);
                 rfFile(filePath);
 
                 //ReadFileAndSortByScore(filePath);
@@ -88,7 +93,7 @@ namespace GameProgChallHghScorLeadbrd_ChrisFrench0259182_251031
             Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.Write($"Hi ");
             Console.ForegroundColor = ConsoleColor.Blue;
-            Console.Write($"{Character}");
+            Console.Write($"{Character} ");
             Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.WriteLine("today you've played a fun game of....");
             Console.ForegroundColor = ConsoleColor.Magenta;
@@ -102,7 +107,7 @@ namespace GameProgChallHghScorLeadbrd_ChrisFrench0259182_251031
             Console.ForegroundColor = ConsoleColor.Magenta;
             Console.Write("Keith Courage in Alpha Zones");
             Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.WriteLine(" (nobody remembers the TurboGrafx-16).\\n you did well it is now time to see your score.\")");
+            Console.WriteLine(" (nobody remembers the TurboGrafx-16).\n you did well it is now time to see your score.");
 
         }
 
@@ -125,30 +130,58 @@ namespace GameProgChallHghScorLeadbrd_ChrisFrench0259182_251031
         //m2
         static void Initials()
         {
+            string input;
+            bool isValid = false;
+            
+            do
+            {
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
+                Console.Write("Please your 3 initials");
+                Console.ForegroundColor = ConsoleColor.Blue;
+                input = Console.ReadLine();
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
+                if (input != null && input.Length == 3)
+                {
+                    isValid = true;
+                    Console.WriteLine("Thanks for the input.");
+                    plrInitls = input;
+                    Console.ForegroundColor = ConsoleColor.Blue;
+                    Console.WriteLine(plrInitls);
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Did you fail kindergarden? Maths is not your strong suit. \nPlease try again and remember... \nOne plus one plus one equals three.");
+                    Console.ResetColor();
+                }
+
+            } while (!isValid);
             Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.WriteLine("Please enter your First inital and press enter");
-            Console.ForegroundColor = ConsoleColor.Blue;
-            initial1 = Console.ReadLine();
-            //initial1 = (char)Console.Read();
-            //Console.ReadKey(true);
 
-            Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.WriteLine("Please enter your Second inital and press enter");
-            Console.ForegroundColor = ConsoleColor.Blue;
-            initial2 = Console.ReadLine();
-            //initial2 = (char)Console.Read();
-            // Console.ReadKey(true);
+            //Console.ForegroundColor = ConsoleColor.DarkYellow;
+            //Console.WriteLine("Please enter your First inital and press enter");
+            //Console.ForegroundColor = ConsoleColor.Blue;
+            //initial1 = Console.ReadLine();
+            ////initial1 = (char)Console.Read();
+            ////Console.ReadKey(true);
 
-            Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.WriteLine("Please enter your Third inital and press enter");
-            Console.ForegroundColor = ConsoleColor.Blue;
-            initial3 = Console.ReadLine();
-            //initial3 = (char)Console.Read();
-            // Console.ReadKey(true);
+            //Console.ForegroundColor = ConsoleColor.DarkYellow;
+            //Console.WriteLine("Please enter your Second inital and press enter");
+            //Console.ForegroundColor = ConsoleColor.Blue;
+            //initial2 = Console.ReadLine();
+            ////initial2 = (char)Console.Read();
+            //// Console.ReadKey(true);
+
+            //Console.ForegroundColor = ConsoleColor.DarkYellow;
+            //Console.WriteLine("Please enter your Third inital and press enter");
+            //Console.ForegroundColor = ConsoleColor.Blue;
+            //initial3 = Console.ReadLine();
+            ////initial3 = (char)Console.Read();
+            //// Console.ReadKey(true);
 
 
-            plrInitls = ($"{initial1}.{initial2}.{initial3}.");
-            Console.ForegroundColor = ConsoleColor.White;
+            //plrInitls = ($"{initial1}.{initial2}.{initial3}.");
+            //Console.ForegroundColor = ConsoleColor.White;
         }
 
         //m3
@@ -162,7 +195,7 @@ namespace GameProgChallHghScorLeadbrd_ChrisFrench0259182_251031
             Console.Write($"- ");
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine(plrInitls);
-
+            
             Console.ForegroundColor = ConsoleColor.White;
         }
 
