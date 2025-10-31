@@ -41,21 +41,30 @@ namespace GameProgChallHghScorLeadbrd_ChrisFrench0259182_251031
 
                 genScore();
                 Thread.Sleep(1000);
+                
                 Initials();
                 Thread.Sleep(2000);
+                
                 WriteScoreInitals();
                 Thread.Sleep(500);
+                
                 //Console.ForegroundColor = ConsoleColor.DarkYellow;
                 //Console.WriteLine("press any Key to save scores");
                 //Console.ReadKey(true);
+                
                 Thread.Sleep(1500);
                 wtFile();
+                
                 //Console.ForegroundColor = ConsoleColor.DarkYellow;
                 //Console.WriteLine("press any Key to write scores to screen");
                 //Console.ReadKey(true);
+                
                 Thread.Sleep(1500);
                 rfFile(filePath);
-
+                
+                Thread.Sleep(1500);
+                RFAndSB(filePath);
+                
                 //ReadFileAndSortByScore(filePath);
 
                 Console.ForegroundColor = ConsoleColor.DarkYellow;
@@ -136,7 +145,7 @@ namespace GameProgChallHghScorLeadbrd_ChrisFrench0259182_251031
             do
             {
                 Console.ForegroundColor = ConsoleColor.DarkYellow;
-                Console.Write("Please your 3 initials");
+                Console.Write("Please provide your 3 initials:  ");
                 Console.ForegroundColor = ConsoleColor.Blue;
                 input = Console.ReadLine();
                 Console.ForegroundColor = ConsoleColor.DarkYellow;
@@ -209,91 +218,143 @@ namespace GameProgChallHghScorLeadbrd_ChrisFrench0259182_251031
             {
              
                 File.AppendAllText(filePath, ($"{newScore}, {plrInitls}") + Environment.NewLine);
-                Console.WriteLine("Data saved successfully.");
+                Console.WriteLine("Scores are in the ledger and saved all snug like.");
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"An error occurred: {ex.Message}");
+                Console.WriteLine($"An ID10T error occurred: {ex.Message}");
             }
             Console.ForegroundColor = ConsoleColor.White;
         }
 
         //m7
         static void rfFile(string filePath)
-           
-
 
         {
-           // string filePath = "Scores.txt";
+            Console.ForegroundColor = ConsoleColor.DarkCyan;
+
+            string[] fileLinesArray = null;
+
             try
             {
-                string fileContents = File.ReadAllText(filePath);
+               
+                fileLinesArray = File.ReadAllLines(filePath);
 
-                Console.WriteLine($"--- Contents of {filePath} ---");
-                Console.WriteLine(fileContents);
-                Console.WriteLine("--- End of file contents ---");
+                Console.WriteLine($"I have reviewed {fileLinesArray.Length} records from the ledger.");
+
+                Console.WriteLine("\n--- record begins ---");
+
+                Array.Sort(fileLinesArray);
+                Array.Reverse(fileLinesArray);
+
+                foreach (string line in fileLinesArray)
+                {
+                    Console.WriteLine(line);
+                }
+                Console.WriteLine("--- record ends ---\n");
+            }
+            catch (FileNotFoundException)
+            {
+                Console.WriteLine($"Opps I seem to have misplaced  '{filePath}' it was not found.");
+            }
+            catch (IOException ex)
+            {
+                Console.WriteLine($"An ID10T error occurred: {ex.Message}");
+            }
+
+            Console.ForegroundColor = ConsoleColor.White; 
+        }
+
+        //{
+        //   // string filePath = "Scores.txt";
+        //    try
+        //    {
+        //        string fileContents = File.ReadAllText(filePath);
+
+        //        Console.WriteLine($"--- Contents of {filePath} ---");
+        //        Console.WriteLine(fileContents);
+        //        Console.WriteLine("--- End of file contents ---");
 
 
-                //File.ReadAllText(filePath);
-                //Console.WriteLine("Data recovered successfully.");
-                // Console.WriteLine(scoreData);
+        //        //File.ReadAllText(filePath);
+        //        //Console.WriteLine("Data recovered successfully.");
+        //        // Console.WriteLine(scoreData);
+        //    }
+
+        //    catch (FileNotFoundException)
+        //    {
+        //        Console.WriteLine($"Error: The file '{filePath}' was not found.");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Console.WriteLine($"An error occurred: {ex.Message}");
+        //    }
+        //    Console.ForegroundColor = ConsoleColor.White;
+        //}
+
+
+        //m11
+       
+
+        static void RFAndSB(string filePath)
+        {
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            string[] fileLinesArray = null;
+            try
+            {
+            fileLinesArray = File.ReadAllLines(filePath);
+            Console.WriteLine($"I have reviewed {fileLinesArray.Length} records from the ledger.");
+
+           
+            var sortedRecords = fileLinesArray
+                .Select(line =>
+                {
+                   
+                    string[] parts = line.Split(',');
+                    if (parts.Length == 2 && int.TryParse(parts[0].Trim(), out int score))
+                    {
+                       
+                        return new { Line = line, Score = score };
+                    }
+                   
+                    return new { Line = line, Score = int.MinValue };
+                })
+                
+                .OrderByDescending(item => item.Score)
+               
+                .Where(item => item.Score != int.MinValue)
+              
+                .ToArray();
+
+                Console.WriteLine("\n--- Sorted Records (High to Low) ---");
+                    foreach (var line in sortedRecords)
+                    {
+                        Console.WriteLine(line);
+                    }
+                Console.WriteLine("--- record ends ---\n");
             }
 
             catch (FileNotFoundException)
             {
-                Console.WriteLine($"Error: The file '{filePath}' was not found.");
+            Console.WriteLine($"Opps I seem to have misplaced '{filePath}' it was not found.");
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"An error occurred: {ex.Message}");
+                       
             }
             Console.ForegroundColor = ConsoleColor.White;
+
+
+
         }
-
-
-        //m11
-        //cannot  get the sorting  figured out 
-
-        //static void ReadFileAndSortByScore(string filePath)
-        //{
-        //    if (!File.Exists(filePath))
-        //    {
-        //        Console.WriteLine($"Error: The file '{filePath}' does not exist.");
-        //        return;
-        //    }
-
-        //        string[] lines = File.ReadAllLines(filePath);
-
-        //        var sortedScores = lines
-        //        .Select(line =>
-        //        {
-                    
-        //            var parts = line.Split(',');
-        //            if (parts.Length == 2 && int.TryParse(parts[1].Trim(), out int score))
-        //            {
-        //                return new { Score = score, Line = line };
-        //            }
-        //            return new { Score = 0, Line = line }; 
-        //        })
-               
-        //        .OrderByDescending(item => item.Score)
-        //        .ToList(); 
-
-           
-        //    Console.WriteLine("--- High Scores (Highest to Lowest) ---");
-        //    foreach (var item in sortedScores)
-        //    {
-        //        Console.WriteLine(item.Line);
-        //    }
-        //    Console.WriteLine("--- End of Scores ---");
-        //}
-
-
     }
+
+}
 
 
     
-}
+
 
         
 
