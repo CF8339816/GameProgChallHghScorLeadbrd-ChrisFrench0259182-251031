@@ -12,56 +12,63 @@ namespace GameProgChallHghScorLeadbrd_ChrisFrench0259182_251031
     {
         static int newScore;
         static Random random = new Random();
-        // static string initals;
-        //static string plrInitls;
         static string plrInitls = ($"{initial1}.{initial2}.{initial3}.");
-        static string scoreData = ($"{hScore}, {plrInitls}");
+       // static string scoreData = ($"{hScore}, {plrInitls}");
         static string initial1;
         static string initial2;
         static string initial3;
         //static char initial1;
         //static char initial2;
         //static char initial3;
-        //static char input;
         static string input;
-        static List<string> ScoreInfo = new List<string>();
+       // static List<string> ScoreInfo = new List<string>();
         static string filePath = "Scores.txt";
-        static string hScore = newScore.ToString();
-        static List<string> list;
+        //static string hScore = newScore.ToString();
+        static string Character = "Big Player 6";
+
+
+        // static List<string> list;
+
+
+
+
         static void Main(string[] args)
         {
-
-           // do
-            //{
+            NamespaceHUD();
+            Thread.Sleep(2000);
+            do
+            { 
 
                 genScore();
-                Thread.Sleep(1000);
+                Thread.Sleep(2000);
                 Initials();
-                Thread.Sleep(1000);
+                Thread.Sleep(2000);
                 WriteScoreInitals();
                 Thread.Sleep(500);
-                scoreList();
-                Thread.Sleep(1000);
-                //wtFile();
-                //Thread.Sleep(1000);
-                rfFile();
+           
+                Console.ReadKey(true);
+                wtFile();
+                Console.ReadKey(true);
+                rfFile(filePath);
+
+                //ReadFileAndSortByScore(filePath);
 
                 Console.ForegroundColor = ConsoleColor.DarkYellow;
                 Console.WriteLine("Do you want to exit? Type y for yes then press enter, press any other key to continue.");
-
-                //char input = (char)Console.Read();
+                
+                Console.ForegroundColor = ConsoleColor.Red;
                 input = Console.ReadLine();
-
-                Console.ForegroundColor = ConsoleColor.Blue;
+                                
                 Console.WriteLine(input);
 
                 Console.ForegroundColor = ConsoleColor.DarkYellow;
-            //}
-            // while (char.ToLower(input) != 'y');
-          //  while (input.ToLower() != "y");
 
-         //   Console.ForegroundColor = ConsoleColor.White;
-          //  Console.WriteLine("Exiting program...");
+            }
+            
+            while (input != null && input.ToLower() != "y");
+
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("Exiting program...");
 
 
 
@@ -72,7 +79,32 @@ namespace GameProgChallHghScorLeadbrd_ChrisFrench0259182_251031
         //methods below
 
         //m7
+       static void NamespaceHUD()
+        {
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.WriteLine("What is your character's name");
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Character = Console.ReadLine();
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.Write($"Hi ");
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.Write($"{Character}");
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.WriteLine("today you've played a fun game of....");
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.Write("Space Invaders");
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.WriteLine(", or maybe it was");
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.Write("Bonk's Adventures");
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.WriteLine("... though I think it's safe to  say it was definately NOT ");
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.Write("Keith Courage in Alpha Zones");
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.WriteLine(" (nobody remembers the TurboGrafx-16).\\n you did well it is now time to see your score.\")");
 
+        }
 
 
         //m8
@@ -82,6 +114,7 @@ namespace GameProgChallHghScorLeadbrd_ChrisFrench0259182_251031
             newScore = random.Next(1, 1001);
             Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.Write($" score:");
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine(newScore);
            // Console.ReadKey(true);
 
@@ -137,69 +170,92 @@ namespace GameProgChallHghScorLeadbrd_ChrisFrench0259182_251031
 
         static void wtFile()
         {
-
+           // string filePath = "Scores.txt";
+           // string scoreData = ($"{hScore}, {plrInitls}");
             try
             {
-                File.WriteAllText(filePath, scoreData);
-         
+             
+                File.AppendAllText(filePath, ($"{newScore}, {plrInitls}") + Environment.NewLine);
                 Console.WriteLine("Data saved successfully.");
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"An error occurred: {ex.Message}");
             }
+            Console.ForegroundColor = ConsoleColor.White;
         }
 
         //m7
-        static void rfFile()
+        static void rfFile(string filePath)
+           
+
+
         {
+           // string filePath = "Scores.txt";
             try
             {
-                File.ReadAllText(filePath);
-                Console.WriteLine("Data recovered successfully.");
-                Console.WriteLine(scoreData);
+                string fileContents = File.ReadAllText(filePath);
+
+                Console.WriteLine($"--- Contents of {filePath} ---");
+                Console.WriteLine(fileContents);
+                Console.WriteLine("--- End of file contents ---");
+
+
+                //File.ReadAllText(filePath);
+                //Console.WriteLine("Data recovered successfully.");
+                // Console.WriteLine(scoreData);
+            }
+
+            catch (FileNotFoundException)
+            {
+                Console.WriteLine($"Error: The file '{filePath}' was not found.");
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"An error occurred: {ex.Message}");
             }
+            Console.ForegroundColor = ConsoleColor.White;
         }
 
 
-        //m10
-        static void scoreList()
-        {
+        //m11
+        //cannot  get the sorting  figured out 
 
-            List<string> ScoreInfo = new List<string>();
+        //static void ReadFileAndSortByScore(string filePath)
+        //{
+        //    if (!File.Exists(filePath))
+        //    {
+        //        Console.WriteLine($"Error: The file '{filePath}' does not exist.");
+        //        return;
+        //    }
+
+        //        string[] lines = File.ReadAllLines(filePath);
+
+        //        var sortedScores = lines
+        //        .Select(line =>
+        //        {
+                    
+        //            var parts = line.Split(',');
+        //            if (parts.Length == 2 && int.TryParse(parts[1].Trim(), out int score))
+        //            {
+        //                return new { Score = score, Line = line };
+        //            }
+        //            return new { Score = 0, Line = line }; 
+        //        })
+               
+        //        .OrderByDescending(item => item.Score)
+        //        .ToList(); 
+
+           
+        //    Console.WriteLine("--- High Scores (Highest to Lowest) ---");
+        //    foreach (var item in sortedScores)
+        //    {
+        //        Console.WriteLine(item.Line);
+        //    }
+        //    Console.WriteLine("--- End of Scores ---");
+        //}
 
 
-            for (int i = 0; i < 1; i++)
-            {
-
-                ScoreInfo.Add(scoreData);
-
-                Console.WriteLine($"Generated score: {scoreData}. Added to list.");
-            }
-
-            Console.WriteLine("\n--- All scores have been added. ---\n");
-
-
-            foreach (string score in ScoreInfo)
-            {
-                // Console.WriteLine(score);
-
-                try
-                {
-                    File.WriteAllText(filePath, scoreData);
-        
-                    Console.WriteLine("Data saved successfully.");
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"An error occurred: {ex.Message}");
-                }
-            }
-        }
     }
 
 
